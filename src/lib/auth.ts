@@ -1,3 +1,4 @@
+
 // Helper functions for auth operations, e.g., storing/retrieving token from localStorage
 
 type UserRole = 'USUARIO' | 'ADVOGADO';
