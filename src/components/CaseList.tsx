@@ -15,6 +15,21 @@ import { Button } from './ui/button';
 interface CaseListProps {
 }
 
+// Interface for the raw data structure from the API
+interface ApiCase {
+  id: number;
+  titulo?: string | null;
+  descricao?: string | null;
+  usuario?: {
+    id: number;
+    nome?: string | null;
+  } | null;
+  dataCriacao?: string | null;
+  createdAt?: string | null; // To handle if API sends createdAt directly
+  // Add other fields if the API sends more that might be relevant
+}
+
+
 const CaseList: React.FC<CaseListProps> = () => {
   const [cases, setCases] = useState<Case[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,8 +57,18 @@ const CaseList: React.FC<CaseListProps> = () => {
           const errorData = await response.json();
           throw new Error(errorData.message || `Erro ao buscar casos: ${response.statusText}`);
         }
-        const data: Case[] = await response.json();
-        const processedData = data.map(c => ({...c, description: c.description || "Descrição não fornecida."}));
+        const rawData: ApiCase[] = await response.json();
+
+        const processedData: Case[] = rawData.map(item => ({
+          id: item.id,
+          title: item.titulo || "Título não fornecido",
+          description: item.descricao || "Descrição não fornecida",
+          usuario: item.usuario ? {
+            id: item.usuario.id,
+            name: item.usuario.nome || "Usuário Anônimo"
+          } : undefined,
+          createdAt: item.dataCriacao || item.createdAt || undefined,
+        }));
         setCases(processedData);
       } catch (err) {
         const errorMessage = (err as Error).message;
@@ -66,8 +91,9 @@ const CaseList: React.FC<CaseListProps> = () => {
   };
 
   const filteredCases = cases.filter(caseItem =>
+    // title and description are now guaranteed to be strings by processedData
     caseItem.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (caseItem.description && caseItem.description.toLowerCase().includes(searchTerm.toLowerCase()))
+    caseItem.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (isLoading) {
