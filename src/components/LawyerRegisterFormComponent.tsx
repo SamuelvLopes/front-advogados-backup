@@ -49,10 +49,17 @@ export function LawyerRegisterFormComponent() {
   async function onSubmit(data: LawyerRegisterFormValues) {
     setIsLoading(true);
     try {
+      const payload = {
+        name: data.name,
+        email: data.email,
+        senha: data.password, // Changed from password to senha
+        oab: data.oab,
+        role: "ADVOGADO",
+      };
       const response = await fetch(`${API_BASE_URL}/advogados`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, role: "ADVOGADO" }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {

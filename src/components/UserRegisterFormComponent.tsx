@@ -47,10 +47,16 @@ export function UserRegisterFormComponent() {
   async function onSubmit(data: UserRegisterFormValues) {
     setIsLoading(true);
     try {
+      const payload = {
+        name: data.name,
+        email: data.email,
+        senha: data.password, // Changed from password to senha
+        role: "USUARIO",
+      };
       const response = await fetch(`${API_BASE_URL}/usuarios`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, role: "USUARIO" }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
