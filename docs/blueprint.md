@@ -4,6 +4,7 @@
 
 - User Registration: Allow users to register with their name, email, password, and role (USUARIO). Endpoint: POST http://localhost:8080/usuarios.
 - Lawyer Registration: Enable lawyers to register with their name, email, password, OAB number, and role (ADVOGADO). Endpoint: POST http://localhost:8080/advogados.
+teste
 - User Login: Authenticate users and lawyers, generating a token upon successful login. Endpoint: POST http://localhost:8080/login with email and password.
 - Case Submission: Case Submission (Usuario): Allow authenticated users to submit a new legal case with a title and description. Requires Authorization header with Bearer token. Endpoint: POST http://localhost:8080/causas
 - Case Listing: Case Listing (Advogado): Enable lawyers to view a list of all submitted cases. Requires Authorization header with Bearer token. Endpoint: GET http://localhost:8080/causas. Displayed in a panel.
