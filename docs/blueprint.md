@@ -8,7 +8,7 @@
 - Case Submission: Case Submission (Usuario): Allow authenticated users to submit a new legal case with a title and description. Requires Authorization header with Bearer token. Endpoint: POST http://localhost:8080/causas
 - Case Listing: Case Listing (Advogado): Enable lawyers to view a list of all submitted cases. Requires Authorization header with Bearer token. Endpoint: GET http://localhost:8080/causas. Displayed in a panel.
 - Responsive Dashboard: Responsive Dashboard: Present key information on a mobile-first dashboard, providing a clear overview for both users and lawyers.
-teste
+
 
 ## Style Guidelines:
 
