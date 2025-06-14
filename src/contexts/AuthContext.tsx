@@ -12,7 +12,7 @@ interface User {
   name: string;
   email: string;
   role: UserRole;
-  oab?: string; // Optional for lawyers
+  oab?: string; 
 }
 
 interface AuthContextType {
@@ -66,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(prevUser => {
       if (prevUser) {
         const updatedUser = { ...prevUser, ...userData };
-        storeUserData(updatedUser);
+        storeUserData(updatedUser); // Make sure to update localStorage as well
         return updatedUser;
       }
       return null;

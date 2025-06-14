@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,10 +45,14 @@ export function LoginFormComponent() {
   async function onSubmit(data: LoginFormValues) {
     setIsLoading(true);
     try {
+      const payload = {
+        email: data.email,
+        senha: data.password, // Changed from password to senha
+      };
       const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload), // Use the new payload
       });
 
       const result = await response.json();
@@ -56,26 +61,10 @@ export function LoginFormComponent() {
         throw new Error(result.message || "Falha ao fazer login.");
       }
       
-      // Assuming the API returns token and user data (name, email, role)
-      // The user object might be nested, e.g. result.user
-      // For this example, let's assume result has: token, name, email, role
-      // This needs to match the actual API response structure.
-      // If role is not directly available, it might need to be fetched or assumed.
-      // For now, if the API returns a generic user object without role, we'll need a way to get it.
-      // Let's assume the login endpoint returns a user object like: { name: string, email: string, role: string, token: string }
-      // Or { token: string, user: { name: string, email: string, role: string } }
-      // The prompt suggests "generating a token", doesn't specify user details return.
-      // We will assume a structure like: { token: "...", name: "...", email: "...", role: "..." }
-      // This is a common pattern, if not, AuthContext needs modification.
-      // Let's assume the backend provides the necessary user details in the login response.
-      // If it returns { token: "...", id: "...", authorities: [{authority: "ROLE_USUARIO"}] }
-      // We need to map `authorities` to `role`.
-
-      let userRole = result.role; // Default if role is top-level
-      if (result.user && result.user.role) { // If user is nested
+      let userRole = result.role; 
+      if (result.user && result.user.role) { 
           userRole = result.user.role;
       } else if (result.authorities && result.authorities.length > 0) {
-        // Example: map Spring Security role "ROLE_USUARIO" to "USUARIO"
         const authority = result.authorities[0].authority;
         if (authority === "ROLE_USUARIO") userRole = "USUARIO";
         else if (authority === "ROLE_ADVOGADO") userRole = "ADVOGADO";
@@ -86,9 +75,10 @@ export function LoginFormComponent() {
       }
 
       const userData = {
-        name: result.name || (result.user ? result.user.name : "Usuário"),
+        name: result.nome || result.name || (result.user ? result.user.name : "Usuário"), // Prefer 'nome' if available
         email: result.email || (result.user ? result.user.email : data.email),
         role: userRole,
+        oab: result.oab || (result.user ? result.user.oab : undefined), // Include OAB if available
       };
 
       login(result.token, userData);
