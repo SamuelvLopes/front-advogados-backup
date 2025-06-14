@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,6 +52,12 @@ export function SubmitCaseFormComponent() {
       return;
     }
 
+    const payload = {
+      titulo: data.title,
+      descricao: data.description,
+      status: "ABERTA", // Set status to "ABERTA" as per backend requirement
+    };
+
     try {
       const response = await fetch(`${API_BASE_URL}/causas`, {
         method: "POST",
@@ -58,7 +65,7 @@ export function SubmitCaseFormComponent() {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload), // Use the transformed payload
       });
 
       if (!response.ok) {
