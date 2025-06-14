@@ -2,7 +2,7 @@
 import type React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileText, CalendarDays, UserCircle } from 'lucide-react';
+import { FileText, CalendarDays, UserCircle, ArrowRight } from 'lucide-react';
 
 export interface Case {
   id: number;
@@ -33,12 +33,16 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseData, onViewDetails }) => {
   };
 
   return (
-    <Card className="flex flex-col h-full bg-card rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out overflow-hidden">
-      <CardHeader className="p-5 bg-transparent"> {/* Removed bg-primary/5 for cleaner look */}
+    <Card className="flex flex-col h-full bg-card rounded-xl shadow-card-modern hover:shadow-card-modern-hover transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+      <CardHeader className="p-5">
         <div className="flex items-start space-x-3.5">
-          <FileText className="h-6 w-6 text-primary mt-0.5 shrink-0" />
+          <div className="p-2.5 bg-primary/10 rounded-lg mt-0.5">
+            <FileText className="h-5 w-5 text-primary shrink-0" />
+          </div>
           <div>
-            <CardTitle className="text-lg font-headline text-primary leading-tight line-clamp-2">{caseData.title}</CardTitle>
+            <CardTitle className="text-lg font-headline text-primary leading-tight line-clamp-2 hover:text-primary/80 transition-colors">
+              {caseData.title}
+            </CardTitle>
             {caseData.usuario && (
               <CardDescription className="text-xs text-muted-foreground flex items-center mt-1.5">
                 <UserCircle className="h-3.5 w-3.5 mr-1.5"/> Submetido por: Usuário ID {caseData.usuario.id}
@@ -58,15 +62,15 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseData, onViewDetails }) => {
           </div>
         )}
       </CardContent>
-      <CardFooter className="p-4 border-t border-border bg-muted/20">
+      <CardFooter className="p-4 border-t border-border bg-muted/30">
         {onViewDetails ? (
           <Button 
             variant="outline" 
-            className="w-full border-primary text-primary hover:bg-primary/10 hover:text-primary-foreground focus:ring-primary"
+            className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground focus:ring-primary group transition-all duration-200"
             onClick={() => onViewDetails(caseData.id)}
             aria-label={`Ver detalhes do caso ${caseData.title}`}
           >
-            Ver Detalhes
+            Ver Detalhes <ArrowRight className="ml-2 h-4 w-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-transform"/>
           </Button>
         ) : (
            <p className="text-xs text-muted-foreground italic w-full text-center">Mais ações em breve</p>

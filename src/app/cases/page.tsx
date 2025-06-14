@@ -34,10 +34,12 @@ export default function CasesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12 min-h-screen-content">
-      <Card className="mb-8 lg:mb-12 shadow-xl bg-card rounded-xl">
-        <CardHeader className="bg-primary/5 p-6 md:p-8">
+      <Card className="mb-8 lg:mb-12 shadow-card-modern bg-card rounded-xl border-l-4 border-primary/30">
+        <CardHeader className="p-6 md:p-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
-            <Briefcase className="h-10 w-10 md:h-12 md:w-12 text-primary" />
+            <div className="p-3 bg-primary/10 rounded-lg">
+              <Briefcase className="h-8 w-8 md:h-10 md:w-10 text-primary" />
+            </div>
             <div>
               <CardTitle className="text-2xl md:text-3xl font-headline text-primary">Casos Disponíveis para Atuação</CardTitle>
               <CardDescription className="text-md text-muted-foreground mt-1">
