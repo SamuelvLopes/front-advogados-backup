@@ -1,3 +1,4 @@
+
 "use client";
 
 import CaseList from '@/components/CaseList';
@@ -12,7 +13,7 @@ export default function CasesPage() {
 
   if (isLoading || !isAuthenticated) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-var(--navbar-height,80px))] p-6">
+      <div className="flex flex-col items-center justify-center min-h-screen-content p-6">
         <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     );
@@ -20,7 +21,7 @@ export default function CasesPage() {
   
   if (isAuthenticated && user?.role !== 'ADVOGADO') {
      return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-var(--navbar-height,80px))] p-6 text-center">
+      <div className="flex flex-col items-center justify-center min-h-screen-content p-6 text-center">
         <AlertTriangle className="h-16 w-16 text-destructive mb-4" />
         <h1 className="text-3xl font-bold text-destructive mb-2">Acesso Negado</h1>
         <p className="text-muted-foreground mb-6">Esta página é exclusiva para advogados.</p>
@@ -32,14 +33,14 @@ export default function CasesPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <Card className="mb-8 shadow-lg bg-card rounded-xl">
-        <CardHeader className="bg-primary/5 p-6">
-          <div className="flex items-center space-x-4">
-            <Briefcase className="h-10 w-10 text-primary" />
+    <div className="container mx-auto px-4 py-8 lg:py-12 min-h-screen-content">
+      <Card className="mb-8 lg:mb-12 shadow-xl bg-card rounded-xl">
+        <CardHeader className="bg-primary/5 p-6 md:p-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+            <Briefcase className="h-10 w-10 md:h-12 md:w-12 text-primary" />
             <div>
-              <CardTitle className="text-3xl font-headline text-primary">Casos Disponíveis para Atuação</CardTitle>
-              <CardDescription className="text-md text-muted-foreground">
+              <CardTitle className="text-2xl md:text-3xl font-headline text-primary">Casos Disponíveis para Atuação</CardTitle>
+              <CardDescription className="text-md text-muted-foreground mt-1">
                 Revise os casos submetidos e escolha aqueles em que pode oferecer sua ajuda voluntária.
               </CardDescription>
             </div>
@@ -50,8 +51,3 @@ export default function CasesPage() {
     </div>
   );
 }
-
-// Ensure metadata is exported correctly if needed, but this is a client component focus page.
-// export const metadata: Metadata = {
-//   title: 'Lista de Casos | Advogados Solidários',
-// };

@@ -1,3 +1,4 @@
+
 "use client";
 
 import type React from 'react';
@@ -11,13 +12,13 @@ interface AuthFormWrapperProps {
 
 const AuthFormWrapper: React.FC<AuthFormWrapperProps> = ({ title, description, children }) => {
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-var(--navbar-height,80px))] bg-gradient-to-br from-background to-blue-100 dark:from-slate-900 dark:to-slate-800 p-4">
-      <Card className="w-full max-w-md shadow-2xl bg-card rounded-xl">
-        <CardHeader className="text-center">
+    <div className="flex items-center justify-center min-h-screen-content bg-muted p-4 sm:p-6 lg:p-8">
+      <Card className="w-full max-w-md shadow-xl bg-card rounded-xl">
+        <CardHeader className="text-center p-6 sm:p-8">
           <CardTitle className="text-3xl font-headline text-primary">{title}</CardTitle>
-          <CardDescription className="text-muted-foreground pt-1">{description}</CardDescription>
+          <CardDescription className="text-muted-foreground pt-2">{description}</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6 sm:p-8 pt-0">
           {children}
         </CardContent>
       </Card>

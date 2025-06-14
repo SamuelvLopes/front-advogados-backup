@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -20,7 +21,7 @@ export default function HomePage() {
 
   if (isLoading || isAuthenticated) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-var(--navbar-height,80px))] bg-gradient-to-br from-background to-blue-100 dark:from-slate-900 dark:to-slate-800 text-center p-6">
+      <div className="flex flex-col items-center justify-center min-h-screen-content bg-muted text-center p-6">
         <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
         <p className="text-lg text-foreground">Carregando...</p>
       </div>
@@ -28,23 +29,32 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-var(--navbar-height,80px))] bg-gradient-to-br from-background to-blue-100 dark:from-slate-900 dark:to-slate-800 text-center p-6">
-      <LogoIcon className="h-24 w-24 text-primary mb-6 animate-pulse" />
-      <h1 className="text-5xl font-headline text-primary mb-4">
+    <div className="flex flex-col items-center justify-center min-h-screen-content bg-muted text-center p-6">
+      <LogoIcon className="h-28 w-28 text-primary mb-8 animate-pulse" />
+      <h1 className="text-5xl md:text-6xl font-headline font-bold text-primary mb-6">
         Bem-vindo ao Advogados Solidários
       </h1>
-      <p className="text-xl text-foreground/80 mb-10 max-w-2xl">
+      <p className="text-xl text-foreground/80 mb-12 max-w-2xl">
         Conectando cidadãos a advogados voluntários para um acesso à justiça mais igualitário.
       </p>
-      <div className="space-x-4">
-        <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform duration-150 ease-in-out">
+      <div className="space-y-4 sm:space-y-0 sm:space-x-6 flex flex-col sm:flex-row items-center">
+        <Button 
+          asChild 
+          size="lg" 
+          className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform duration-150 ease-in-out w-full sm:w-auto"
+        >
           <Link href="/login">Entrar</Link>
         </Button>
-        <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 shadow-lg transform hover:scale-105 transition-transform duration-150 ease-in-out">
+        <Button 
+          asChild 
+          variant="outline" 
+          size="lg" 
+          className="border-accent text-accent hover:bg-accent/10 hover:text-accent-foreground shadow-lg transform hover:scale-105 transition-transform duration-150 ease-in-out w-full sm:w-auto"
+        >
           <Link href="/register/user">Registrar</Link>
         </Button>
       </div>
-       <p className="text-sm text-foreground/60 mt-12 max-w-xl">
+       <p className="text-sm text-foreground/70 mt-16 max-w-xl">
         Nossa missão é facilitar o encontro entre quem precisa de auxílio jurídico e profissionais dispostos a ajudar pro bono. Juntos, podemos fazer a diferença.
       </p>
     </div>

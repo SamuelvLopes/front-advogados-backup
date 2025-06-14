@@ -1,3 +1,4 @@
+
 "use client";
 
 import type React from 'react';
@@ -7,12 +8,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { API_BASE_URL } from '@/config/api';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertTriangle, Loader2, SearchX } from 'lucide-react';
+import { AlertTriangle, Loader2, SearchX, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from './ui/button';
 
 interface CaseListProps {
-  // Props can be added later if needed, e.g., for filtering
 }
 
 const CaseList: React.FC<CaseListProps> = () => {
@@ -43,7 +43,6 @@ const CaseList: React.FC<CaseListProps> = () => {
           throw new Error(errorData.message || `Erro ao buscar casos: ${response.statusText}`);
         }
         const data: Case[] = await response.json();
-        // Ensure description is not null or undefined for display
         const processedData = data.map(c => ({...c, description: c.description || "Descrição não fornecida."}));
         setCases(processedData);
       } catch (err) {
@@ -63,7 +62,6 @@ const CaseList: React.FC<CaseListProps> = () => {
   }, [token, toast]);
 
   const handleViewDetails = (caseId: number) => {
-    // Placeholder for future functionality
     toast({ title: "Funcionalidade em desenvolvimento", description: `Detalhes do caso ID ${caseId} em breve.`});
   };
 
@@ -83,7 +81,7 @@ const CaseList: React.FC<CaseListProps> = () => {
 
   if (error) {
     return (
-      <Alert variant="destructive" className="max-w-xl mx-auto my-10">
+      <Alert variant="destructive" className="max-w-xl mx-auto my-10 bg-destructive/5 rounded-lg">
         <AlertTriangle className="h-5 w-5" />
         <AlertTitle>Erro ao carregar os casos</AlertTitle>
         <AlertDescription>{error}</AlertDescription>
@@ -93,25 +91,28 @@ const CaseList: React.FC<CaseListProps> = () => {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col sm:flex-row gap-4 items-center">
-        <Input
-          type="text"
-          placeholder="Buscar casos por título ou descrição..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="max-w-md text-base"
-          aria-label="Buscar casos"
-        />
-        <Button onClick={() => setSearchTerm('')} variant="outline" disabled={!searchTerm} className="text-sm">
+      <div className="flex flex-col sm:flex-row gap-4 items-center p-4 bg-card rounded-xl shadow">
+        <div className="relative w-full sm:max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          <Input
+            type="text"
+            placeholder="Buscar casos por título ou descrição..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 text-sm"
+            aria-label="Buscar casos"
+          />
+        </div>
+        <Button onClick={() => setSearchTerm('')} variant="outline" disabled={!searchTerm} className="text-sm shrink-0">
           Limpar Busca
         </Button>
       </div>
 
       {filteredCases.length === 0 ? (
-        <div className="text-center py-10 bg-card rounded-lg shadow">
-          <SearchX className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+        <div className="text-center py-12 bg-card rounded-xl shadow-md">
+          <SearchX className="h-16 w-16 text-primary/60 mx-auto mb-4" />
           <p className="text-xl text-muted-foreground">
-            {cases.length > 0 && searchTerm ? 'Nenhum caso encontrado com os termos da busca.' : 'Nenhum caso disponível no momento.'}
+            {cases.length > 0 && searchTerm ? 'Nenhum caso encontrado.' : 'Nenhum caso disponível no momento.'}
           </p>
           {cases.length === 0 && !searchTerm && <p className="text-sm text-muted-foreground mt-2">Volte mais tarde para verificar novos casos.</p>}
         </div>
