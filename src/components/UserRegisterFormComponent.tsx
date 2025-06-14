@@ -48,9 +48,9 @@ export function UserRegisterFormComponent() {
     setIsLoading(true);
     try {
       const payload = {
-        name: data.name,
+        nome: data.name, // Changed from name to nome
         email: data.email,
-        senha: data.password, // Changed from password to senha
+        senha: data.password,
         role: "USUARIO",
       };
       const response = await fetch(`${API_BASE_URL}/usuarios`, {

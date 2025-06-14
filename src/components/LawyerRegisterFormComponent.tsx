@@ -50,9 +50,9 @@ export function LawyerRegisterFormComponent() {
     setIsLoading(true);
     try {
       const payload = {
-        name: data.name,
+        nome: data.name, // Changed from name to nome
         email: data.email,
-        senha: data.password, // Changed from password to senha
+        senha: data.password,
         oab: data.oab,
         role: "ADVOGADO",
       };
