@@ -47,12 +47,12 @@ export function LoginFormComponent() {
     try {
       const payload = {
         email: data.email,
-        senha: data.password, // Changed from password to senha
+        senha: data.password, 
       };
       const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload), // Use the new payload
+        body: JSON.stringify(payload), 
       });
 
       const result = await response.json();
@@ -75,17 +75,59 @@ export function LoginFormComponent() {
       }
 
       const userData = {
-        name: result.nome || result.name || (result.user ? result.user.name : "Usuário"), // Prefer 'nome' if available
+        name: result.nome || result.name || (result.user ? result.user.name : "Usuário"), 
         email: result.email || (result.user ? result.user.email : data.email),
         role: userRole,
-        oab: result.oab || (result.user ? result.user.oab : undefined), // Include OAB if available
+        oab: result.oab || (result.user ? result.user.oab : undefined), 
       };
 
-      login(result.token, userData);
+      // If user is USUARIO, attempt to create a default case
+      if (userData.role === 'USUARIO' && result.token) {
+        try {
+          const casePayload = {
+            titulo: "Nova Causa Automática", // Default title
+            descricao: "Causa criada automaticamente após o login.", // Default description
+            status: "ABERTA"
+          };
+          const caseResponse = await fetch(`${API_BASE_URL}/causas`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${result.token}`, // Use the token obtained from login
+            },
+            body: JSON.stringify(casePayload),
+          });
+
+          if (!caseResponse.ok) {
+            const caseErrorResult = await caseResponse.json().catch(() => ({ message: "Erro desconhecido ao criar causa." }));
+            console.error("Erro ao criar causa automática:", caseErrorResult.message);
+            // Optionally, inform the user with a non-blocking toast:
+            // toast({
+            //   variant: "destructive",
+            //   title: "Aviso",
+            //   description: "Não foi possível iniciar uma causa padrão automaticamente.",
+            // });
+          } else {
+            console.log("Causa automática criada com sucesso.");
+            // Optionally, inform the user:
+            // toast({
+            //   title: "Causa padrão criada",
+            //   description: "Uma nova causa foi iniciada para você no painel.",
+            // });
+          }
+        } catch (caseError) {
+          console.error("Erro de rede ou inesperado ao criar causa automática:", (caseError as Error).message);
+        }
+      }
+
+      login(result.token, userData); // This will handle storing token, user data, and redirecting
+
       toast({
         title: "Login bem-sucedido!",
         description: `Bem-vindo(a) de volta, ${userData.name}!`,
       });
+      // The redirect is handled by the login function in AuthContext
+
     } catch (error) {
       toast({
         variant: "destructive",
