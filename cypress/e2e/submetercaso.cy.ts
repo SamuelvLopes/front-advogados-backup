@@ -12,7 +12,7 @@ describe('Fluxo completo: login e criação de caso', () => {
     cy.visit('http://localhost:9002/login')
 
     // Faz login
-    cy.get('input[name="email"]').type('joao@joao.com')
+    cy.get('#«r0»-form-item').type('joao@joao.com')
     cy.get('input[name="password"]').type('123456')
     cy.get('button[type="submit"]').click()
 
