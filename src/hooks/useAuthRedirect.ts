@@ -40,7 +40,16 @@ export const useAuthRedirect = (options: UseAuthRedirectOptions) => {
       router.replace('/dashboard');
     }
 
-  }, [isAuthenticated, user, isLoading, requiredAuth, allowedRoles, redirectPath, router]);
+  }, [
+    isAuthenticated,
+    user,
+    isLoading,
+    requiredAuth,
+    allowedRoles,
+    redirectPath,
+    router,
+    pathname,
+  ]);
 
   return { isLoading, isAuthenticated, user };
 };
