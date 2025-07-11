@@ -131,6 +131,7 @@ const CaseList: React.FC<CaseListProps> = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-11 text-sm h-11"
             aria-label="Buscar casos"
+            maxLength={50}
           />
         </div>
         {searchTerm && (
