@@ -119,7 +119,6 @@ const CaseHistoryList: React.FC = () => {
           <tr className="text-left border-b">
             <th className="py-2 px-1">Título</th>
             <th className="py-2 px-1">Status</th>
-            <th className="py-2 px-1">Data</th>
             {user?.role === "USUARIO" && <th className="py-2 px-1">Propostas</th>}
           </tr>
         </thead>
@@ -128,7 +127,6 @@ const CaseHistoryList: React.FC = () => {
             <tr key={c.id} className="border-b last:border-0">
               <td className="py-2 px-1">{c.title}</td>
               <td className="py-2 px-1">{c.status}</td>
-              <td className="py-2 px-1">{formatDate(c.createdAt)}</td>
               {user?.role === "USUARIO" && (
                 <td className="py-2 px-1">
                   <Dialog>
@@ -149,10 +147,10 @@ const CaseHistoryList: React.FC = () => {
                         <ul className="space-y-4 max-h-60 overflow-y-auto">
                           {proposals.map((p) => (
                             <li key={p.id} className="border-b pb-2">
-                              <p className="font-medium">{p.advogado?.nome || `Advogado ${p.advogado?.id}`}</p>
-                              <p className="text-sm mt-1">{p.mensagem}</p>
+                              <p className="font-medium">{p.advogado?.nome || `Advogado ${p.id}`}</p>
+                              <p className="text-sm mt-1">- <b>{p.mensagem}</b></p>
                               {p.valorSugerido !== undefined && (
-                                <p className="text-sm mt-1">Valor sugerido: R$ {p.valorSugerido.toFixed(2)}</p>
+                                <p className="text-sm mt-1">Valor da proposta: R$ {p.valorSugerido.toFixed(2)}</p>
                               )}
                             </li>
                           ))}
