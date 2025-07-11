@@ -36,10 +36,10 @@ describe('Cadastro de Advogado', () => {
 
     cy.visit('http://localhost:9002/register/lawyer');
 
-    cy.get('#«r0»-form-item').should('be.visible').type(lawyer.name);
+    cy.get('input[name="name"]').should('be.visible').type(lawyer.name);
     cy.get('input[name="email"]').type(lawyer.email);
     cy.get('input[name="password"]').type(lawyer.password);
-    cy.get('#«r2»-form-item').type(lawyer.oab);
+    cy.get('input[name="oab"]').type(lawyer.oab);
     cy.get('button[type="submit"]').click();
   });
 });
@@ -50,8 +50,8 @@ describe('Login de Advogado', () => {
 
     cy.visit('http://localhost:9002/login');
 
-    cy.get('#«r0»-form-item').should('be.visible').type(lawyer.email);
-    cy.get('#«r1»-form-item > .flex').type(lawyer.password);
+    cy.get('input[name="email"]').should('be.visible').type(lawyer.email);
+    cy.get('input[name="password"]').type(lawyer.password);
     cy.get('.space-y-6 > .px-4').click();
   });
 });
